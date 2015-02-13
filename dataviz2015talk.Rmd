@@ -2,7 +2,9 @@
 title: "Data Visualization for Education"
 author: "Jared E. Knowles"
 date: "February 13, 2015"
-output: ioslides_presentation
+output:
+  ioslides_presentation:
+    css: custom.css
 ---
 
 ```{r knitrsetup,echo=FALSE,eval=TRUE,results="hide",error=FALSE,message=FALSE,warning=FALSE}
@@ -86,9 +88,6 @@ How can we improve this simple scatterplot?
 qplot(hp,qsec,data=mtcars)+theme_dpi()
 ```
 
-
---- 
-
 ## Principles {.smaller .columns-2}
 
 - Elements of a chart
@@ -100,7 +99,7 @@ qplot(hp,qsec,data=mtcars)+theme_dpi()
 - Beyond charts
 
 
-```{r plot1,out.width="550px",out.height="330px",echo=FALSE}
+```{r plot1,out.width="470px",out.height="330px",echo=FALSE}
 qplot(hp,qsec,data=mtcars,geom="point")+theme_dpi()+geom_smooth()+
   labs(x="Horsepower",y="Quart. Mile Time",title="Power and Speed")
 rm(PROBS,commonnames,grade,i,number_of_years)
@@ -126,7 +125,7 @@ There are a few things that all charts need [most of the time!]:
 > These add up to provide context and meaning to viewers who have not analyzed 
 the dataset themselves.
 
-## Dimensions
+## Dimensions {.smaller}
 
 - Charts and data are made up of dimensions (e.g. a bar chart is *x* and *y*)
 - Additional dimensions can be represented by additional aesthetics or chart 
@@ -135,7 +134,7 @@ elements (e.g. color, size, shape, etc.)
 - **Smart use of dimensions allows us to increase the information density of our charts**
 
 
-```{r echo=FALSE,out.width='680px',out.height='300px', fig.align='center'}
+```{r echo=FALSE,out.width='680px',out.height='275px', fig.align='center'}
 qplot(readSS,mathSS,data=df[df$grade<6,])+theme_dpi()+labs(title="Multidimensions")+facet_wrap(~grade,nrow=1)
 ```
 
@@ -144,11 +143,8 @@ qplot(readSS,mathSS,data=df[df$grade<6,])+theme_dpi()+labs(title="Multidimension
 <p><q> How you turn dimensions in the <span class = 'red'>data</span> into visual 
 cues for your audience is everything.</q></p>
 
---
-
 ## Reviewing Chart Types
 
----
 
 ## Stacked Bar
 
@@ -167,22 +163,22 @@ cues for your audience is everything.</q></p>
 
 ## Calendar
 
-<p align="center"><img src="img/d3calendar.png" height="440" width="875"></p>
+<p align="center"><img src="img/d3calendar.png" height="440" width="800"></p>
 
 
 ## Lines
 
-<p align="center"><img src="img/d3linemany.png" height="440" width="875"></p>
+<p align="center"><img src="img/d3linemany.png" height="440" width="800"></p>
 
 
 ## Parallel Sets
 
-<p align="center"><img src="img/d3parallelsets.png" height="440" width="875"></p>
+<p align="center"><img src="img/d3parallelsets.png" height="440" width="800"></p>
 
 
 ## Tree Map
 
-<p align="center"><img src="img/d3treemap.png" height="470" width="950"></p>
+<p align="center"><img src="img/d3treemap.png" height="470" width="800"></p>
 
 
 ## Word Cloud
@@ -211,7 +207,11 @@ Color     |  Disparate colors          |  Sequential or divergent colors
 Size      |  Unique size for each value|   mapping to radius of value
 Shape     |  A shape for each value    |   *does not make sense*
 
-### Ordered vs. Unordered
+<!---
+TODO: Add a plot showing examples of this here. 
+-->
+
+## Ordered vs. Unordered
 
 Aesthetic  |    Ordered                         |  Unordered
 ---------- |  --------------------------------  |   -------------------------
@@ -228,7 +228,7 @@ Shape      |  *does not make sense*         |    A shape for each value
 
 ## Charting Categorical Data
 
-```{r echo=FALSE,out.width="680px",out.height="480px",dev='svg'}
+```{r echo=FALSE,out.width="680px",out.height="520px",dev='svg'}
 library(vcd)
 load('data/smalldata.rda')
 df$proflvl<-as.character(df$proflvl)
@@ -241,8 +241,7 @@ mosaic(~race+proflvl,data=df,shade=TRUE)
 ## Charting Ordinal Data
 
 ```{r echo=FALSE}
-
-df$proflvl <- factor(as.character(df$proflvl), levels = c("below basic", 
+df$proflvl <- factor(as.character(df$proflvl), levels = c("minimal", 
                                   "basic", "proficient", "advanced"))
 
 qplot(proflvl,data=df,geom='bar')+theme_dpi()
@@ -261,17 +260,22 @@ qplot(readSS,data=df)+theme_dpi()+labs(title="My Histogram")
 
 ## Maps
 
-<p align="center"><img src="img/evenFRLmap.gif"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:550px; max-height:600px"></p>
+<img src="img/evenFRLmap.gif"  style="display: block; margin:0; height:auto; width:auto; max-width:550px; max-height:600px"; margin-left: auto; margin-right: auto;>
 
 ## Complexity
 
 How do we display thousands or hundreds of thousands of observations with varying data types across multiple dimensions?
 
-1. **Summarize the data**
+**Summarize the data**
+
   * Display summary statistics visually depicting the central tendency and spread of data
-2. **Plot the raw data**
+
+**Plot the raw data**
+
   * Annotate wisely to display the main message
-3. **Model the data**
+
+**Model the data**
+
   * Use a statistical model to summarize features of the data
 
 Let's look at some examples of this. 
@@ -284,8 +288,6 @@ Let's look at some examples of this.
 - If space is of interest, we are interested in maps or spatial distributions
 - **Think about context and reference**
 - Let's look at an example summarizing student data to schools!
-
----
 
 ## Plotting Means
 
@@ -307,36 +309,28 @@ qplot(factor(schid),meanR,data=schooldat[schooldat$schid<25 & schooldat$grade==3
 
 But, what's wrong with this plot?
 
---- &twocol w1:20% w2:80%
+## Mistakes  {.columns-2}
 
-## Mistakes
+- No sense of scale
+- Means can be skewed
+- Simple means are not meaningful
+- With assessment scores we need to know grade distribution
+- Let's try to improve this
 
-*** left
-
->- No sense of scale
->- Means can be skewed
->- Simple means are not meaningful
->- With assessment scores we need to know grade distribution
->- Let's try to improve this
-
-*** right
 
 ```{r plotmeanssmall,echo=FALSE,out.width='400px',out.height='325px'}
 qplot(factor(schid),meanR,data=schooldat[schooldat$schid<25 & schooldat$grade==3,],
       stat='identity')+theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Scores in Grade 3")
 ```
 
----
 
 ## Adding a Dimension
 
 ```{r meanplot2,echo=FALSE}
 schooldat$count<-schooldat$count+rnorm(length(schooldat$count),0,60)
 qplot(factor(schid),meanR,data=schooldat[schooldat$schid<25 & schooldat$grade==3,],
-      stat='identity',size=count)+theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Scores in Grade 3")
+      stat='identity',size=count)+theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Scores in Grade 3", size = "Pupils") 
 ```
-
---- 
 
 ## Even More Dimensions
 
@@ -345,11 +339,9 @@ ggplot(schooldat[schooldat$schid<25 & schooldat$grade==3,],
        aes(x=factor(schid),ymin=meanR-0.5*sdR,ymax=meanR+0.5*sdR,
                      color=perminority))+geom_errorbar(alpha=0.7)+
   geom_point(aes(y=meanR,size=count))+
-  theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Scores in Grade 3")
+  theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Scores in Grade 3", size = "Pupils", color = "% Non-White")
 
 ```
-
----
 
 ## Annotation
 
@@ -360,12 +352,12 @@ ggplot(schooldat[schooldat$schid<25 & schooldat$grade==3,],
        aes(x=factor(schid),ymin=meanR-0.5*sdR,ymax=meanR+0.5*sdR,
                      color=perminority))+geom_errorbar(alpha=0.7)+
   geom_point(aes(y=meanR,size=count))+
-  theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Score")+geom_hline(yintercept=421,color=I("red"))+
-  geom_hline(yintercept=480,color=I("yellow"))
+  theme_dpi() + labs(x="School",y="Mean Reading Score",title="Mean School Reading Score", size = "Pupils", color = "% Non-White") +
+  geom_hline(yintercept=421,color=I("red")) +
+  geom_hline(yintercept=480,color=I("purple"))
 
 ```
 
----
 
 ## Caterpillar Plots
 
@@ -374,14 +366,13 @@ ggplot(schooldat[schooldat$grade==3 & schooldat$schid < 200,],
        aes(x=reorder(factor(schid),meanR),ymin=meanR-0.1*sdR,ymax=meanR+0.1*sdR,
            y = meanR, color=perminority))+geom_pointrange(alpha=0.9) + 
   scale_color_continuous("Percent Minority") +
-  theme_dpi()+labs(x="School",y="Mean Reading Score",title="Mean School Reading Score")+geom_hline(yintercept=421,color=I("red"))+
+  theme_dpi() + labs(x="School",y="Mean Reading Score",title="Mean School Reading Score", size = "Pupils", color = "% Non-White") +
+  geom_hline(yintercept=421,color=I("red"))+
   geom_hline(yintercept=468,color=I("dark blue")) + 
   theme(axis.text.x=element_blank(), panel.grid.major.x = element_blank(), 
         axis.ticks = element_blank())
 
 ```
-
----
 
 ## Raw Data
 
@@ -393,16 +384,12 @@ Sometimes, we can get away with showing the raw data, that is, all data points. 
 
 How could it be done?
 
----
-
 ## 600,000 Observations Too Many
 
 ```{r rawdata1,echo=FALSE,dev='png'}
 qplot(readSS,mathSS,data=student_long)+theme_dpi()+
   labs(x="Reading",y="Math",title="Relationship with Math and Reading")
 ```
-
----
 
 ## Strategies for Presenting Big Data
 
@@ -413,22 +400,21 @@ be successful
 2. Bin the data into groups
 3. Annotate and add references
 
-
----
-
 ## Spreading the Data Out
 
-1. **Repeat the plot for subgroups**
+**Repeat the plot for subgroups**
   * Allow the viewer to draw comparisons across small plots
-2. **Reduce the ink**
+**Reduce the ink**
   * Each point has too much "weight", so make them weigh less
-3. **Add Reference Points**
+**Add Reference Points**
   * 600,000 observations in one panel is not meaningful and overwhelms the viewer
 
 >- Edward Tufte and others recommend **small multiples**, a technique of repeating a plot across groups to compare relationships in multiple dimensions 
 
----
-
+<!---
+Talk about the small multiples.
+Talk about the line of best fit through this data and how it is a model. 
+--> 
 ## What About This
 
 ```{r rawdata2,echo=FALSE,dev='png'}
@@ -437,7 +423,6 @@ qplot(readSS,mathSS,data=student_long,alpha=I(0.01))+facet_wrap(~grade)+
   labs(x="Reading",y="Math",title="Relationship with Math and Reading by Grade")
 ```
 
----
 
 ## Even Smaller Multiples
 
@@ -446,8 +431,6 @@ qplot(readSS,mathSS,data=student_long,alpha=I(0.05))+facet_grid(race~grade)+
   theme_dpi()+geom_smooth()+
   labs(x="Reading",y="Math",title="Relationship with Math and Reading by Grade and Race")
 ```
-
----
 
 ## Binning Data
 
@@ -458,14 +441,9 @@ qplot(readSS,mathSS,data=subset(student_long,grade==3),geom='hex')+
   labs(x="Reading",y="Math",title="Relationship with Math and Reading \n FRPL and SwD Status")
 ```
 
-
---- quote
-
 ## Modeling the Data
 
 <p><q> All models are <span class = 'red'>wrong</span>. Some models are useful.</q></p>
-
----
 
 ## Smoothers 
 
@@ -477,57 +455,36 @@ ggplot(student_long[student_long$grade==5,],
 
 ```
 
----
 
 ## Comparing Model Performance
 
 <p align="center"><img src="img/EWSreview.png" style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:750px"></p>
 
 
---- 
-
 ## Aiding in Model Choice
 
 <p align="center"><img src="img/EWSfull.png" style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:750px"></p>
-
----
 
 ## Regression Trees
 
 <p align="center"><img src="img/parttree.svg"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:490px"></p>
 
----
-
-## Regression Results
-
-<p align="center"><img src="img/modelbracketlang.svg"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:490px"></p>
-
----
-
 ## Coefficient Comparisons
 
 <p align="center"><img src="img/modelplot.png"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:550px"></p>
-
----
 
 ## Path Diagrams
 
 <p align="center"><img src="img/pathdiagram.png"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:490px"></p>
 
----
-
 ## Illustrating a Model through Simulation
 
 <p align="center"><img src="img/withinstudentplot.png"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:700px; max-height:490px"></p>
 
----
 
 ## Simulating Outcomes
 
 <p align="center"><img src="img/ELP_Survival_Curves_DRAFT.png"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:800px; max-height:620px"></p>
-
----
-
 
 ## Combining Features
 
@@ -537,13 +494,9 @@ We can combine these features.
 >- Summary plots with raw data in the background
 >- Reference lines and group comparisons
 
---- animation
-
 ## Animation Example
 
 <p align="center"><img src="https://dl.dropbox.com/u/1811289/TESTstuplot.gif"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:750px; max-height:550px"></p>
-
----
 
 ## Why does this work?
 
@@ -552,7 +505,6 @@ We can combine these features.
 >- Lots of data-ink
 >- Reference points galore
 
----
 ## Some tips
 
 >- Have a properly chosen format and design 
@@ -565,9 +517,8 @@ We can combine these features.
 >- Provide your audience with the context they need and remember they haven't 
 lived in the data like you!
 
---- plot
-
 ## Themes
+
 They can **communicate**, **confound**, **brand**, and **distract**
 
 ```{r plot2, out.width="400px",out.height="220px",echo=FALSE, fig.keep='all', fig.align='default'}
@@ -577,32 +528,25 @@ qplot(hp,mpg,data=mtcars,color=factor(cyl))+theme_excel()+scale_color_excel()
 qplot(hp,mpg,data=mtcars,color=factor(cyl))+theme_stata()
 ```
 
----
+## Technical Details 
 
-## Technical Details
+<p><q>Don't forget them.</q></p>
 
-
---- &twocol w1:50% w2:50%
-
-## Graphics Files
-
-*** left
+### Graphics Files {.columns-2}
 
 ### Raster
+
 - Files like **jpg** , **png** , **gif**. 
 - Fixed scale, aspect ratio, and size
 - Reasonable file size
 - Viewable in almost any image viewing and editing system, including any modern web browser, PowerPoint, etc.
 
-*** right
-
 ### Vector
+
 - Files like **pdf** and **svg**
 - Infinitely zoomable, adjustable on the fly
 - Larger file size
 - Viewable and usable in fewer systems. SVGs can be used in modern web browsers. PDFs included in other PDF reports. 
-
----
 
 ## Technologies
 
@@ -612,9 +556,12 @@ The technology you choose to do visualizations is largely a question of personal
 - Different technologies are useful for different levels of finish and polish; Adobe Illustrator is great for publication quality graphics, R is a great tool for rapidly prototyping different visualizations
 - Chose a technology that best serves your **consumer**, not you the producer. Charts are a service to the consumer, not to the creator. 
 
----
+## Programming vs. Illustrating
 
-## Some Technologies
+Keep in mind that depending on the project you may need to programatically make 
+data visualizations, or you may need a highly customized illustrated graphic. 
+
+## Some Opinions on Technologies
 
 ```{r technologies,echo=FALSE}
 techs<-c("AI","R","Stata/SPSS","D3","Tableau","JavaScript","Processing","Excel","SAS")
@@ -629,14 +576,6 @@ qplot(speed,quality,data=viz,geom="point",color=factor(web),size=I(4))+
   labs(title="Speed and Quality Tradeoffs in Viz Tech")
 ```
 
----
-
-## Programming vs. Illustrating
-
-Keep in mind that depending on the project you may need to programatically make 
-data visualizations, or you may need a highly customized illustrated graphic. 
-
----
 
 ## Beyond Graphics
 
@@ -650,15 +589,9 @@ We have a number of other techniques we can use beyond simple charts.
 - Simulations
 
 
---- &twocol w1:20% w2:80%
+## Group Exercise .{columns-2}
 
-## Group Exercise
-
-Visualize some education data. Imagine we have the following dimensions and want 
-to present more of them on a plot like that on the right. Think about a story 
-you might want to tell and then sketch out your result with your group.
-
-*** left
+### Data
 
 - Grade
 - Disability Status
@@ -669,7 +602,7 @@ you might want to tell and then sketch out your result with your group.
 - Reading Curriculum
 - Math Curriculum
 
-*** right
+### Example
 
 ```{r studentexample,echo=FALSE,out.width='420px',out.height='350px'}
 qplot(attday,readSS,
@@ -680,7 +613,6 @@ qplot(attday,readSS,
   labs(title="Attendance and Assessment Scores Grade 3")
 ```
 
----
 
 ## Example
 
@@ -693,8 +625,6 @@ qplot(attday,readSS,
   labs(title="Attendance and Assessment Scores Grade 3")
 ```
 
-
----
 ## References
 
 - Tufte, Edward. 1992. [The Visual Display of Quantitative Information.](http://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142/) Graphics Press. 
@@ -704,16 +634,13 @@ qplot(attday,readSS,
 - Cleveland, William. 1994. [The Elements of Graphing Data.](http://www.amazon.com/gp/product/0963488414/) Hobart Press. 
 - Cleveland, William. 1993. [Visualizing Data.](http://www.amazon.com/gp/product/0963488406) Hobart Press.
 
----
-
-## References
+## References (cont'd)
 
 - Few, Stephen. 2009. [Now You See It: Simple Visualization Techniques for Quantiative Analysis.](http://www.amazon.com/gp/product/0970601980/) Analytics Press. 
 - Few, Stephen. 2012. [Show Me the Numbers: Designing Tables and Graphs to Enlighten.](http://www.amazon.com/gp/product/0970601972) Analytics Press. 
 - Yau, Nathan. 2011. [Visualize This: The FlowingData Guide to Design, Visualization, and Statistics.](http://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics/dp/0470944889/) Wiley.
 - Few, Stephen. 2006. [Information Dashboard Design: The Effective Visual Communication of Data.](http://www.amazon.com/Information-Dashboard-Design-Effective-Communication/dp/0596100167) O'Reilly Media
 
----
 ## Where to Learn Online?
 
 - [Andy Kirk](http://www.visualisingdata.com)
@@ -723,12 +650,7 @@ qplot(attday,readSS,
 - [Robert Kosara](http://eagereyes.org/about)
 - [Data Stories Podcast](http://datastori.es/)
 
-
---- &twocol w1:50% w2:50%
-
-## Review of Key Concepts
-
-***left
+## Review of Key Concepts {.columns-2}
 
 - Dimensionality
 - Aesthetics and Mappings
@@ -736,18 +658,15 @@ qplot(attday,readSS,
 - Spreading the data out
 - Web vs. print
 
-***right
-
 - Adapt and iterate
 - Modeling the data
 - Themes and style
 - Techniques and software
 
----
 
 ## Contact Information
 
-- DEWS Homepage: [http://wise.dpi.wi.gov/wisedash_dews](http://wise.dpi.wi.gov/wisedash_dews)
+- DEWS Homepage: [http://www.dpi.wi.gov/dews](http://www.dpi.wi.gov/dews)
 - E-mail: jared.knowles@dpi.wi.gov / jeknowles@wisc.edu
 - GitHub: [http://www.github.com/jknowles](http://www.github.com/jknowles)
 - Homepage: [www.jaredknowles.com](http://www.jaredknowles.com/)
@@ -756,20 +675,11 @@ qplot(attday,readSS,
 
 <p align="center"><img src="img/knowleslogo.png"  style="display: block; margin:0 auto; height:auto; width:auto; max-width:350px; max-height:196px"></p>
 
----
-
-## For Fun
-
-<p align="center"><img src="img/periodictablevisualization1.png" height="550" width="900"></p>
-
---- 
-
 ## Backmatter
 
 ```{r wrapup,echo=TRUE,eval=TRUE,results="markup"}
 print(sessionInfo(),locale=FALSE)
 ```
----
 
 
 
