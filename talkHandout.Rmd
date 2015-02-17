@@ -1,84 +1,167 @@
 ---
 title: "Data Visualization Fieldguide for Education"
 author: "Jared E. Knowles"
-date: "February 13, 2015"
+date: "March 2015"
 output: 
   rmarkdown::tufte_handout:
     keep_tex: true
 ---
 
-# Introduction
-
-The Tufte-\LaTeX\ [^tufte_latex] document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. 
-
-# Headings
-
-This style provides a- and b-heads (that is, `#` and `##`), demonstrated above.
-An error is emitted if you try to use `###` and smaller headings.
-
-\newthought{In his later books}[^books_be], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.
-
-# Figures
-
-## Margin Figures
-
-Images and graphics play an integral role in Tufte's work. To place figures or tables in the margin you can use the `fig.margin` knitr chunk option. For example:
-
-```{r, fig.margin = TRUE, fig.cap = "Sepal length vs. petal length, colored by species"}
+```{r knitrsetup,echo=FALSE,eval=TRUE,results="hide",error=FALSE,message=FALSE,warning=FALSE}
+library(knitr)
+opts_chunk$set(message=FALSE, error=FALSE, warning=FALSE, echo=FALSE, comment=NA)
+library(eeptools)
 library(ggplot2)
-qplot(Sepal.Length, Petal.Length, data = iris, color = Species)
+library(ggthemes)
+require('hexbin')
+source("data/simulate_data.R")
+# load("data/cache.rda")
+load("data/smalldata.rda")
 ```
 
-Note the use of the `fig.cap` chunk option to provide a figure caption. You can adjust the proportions of figures using the `fig.width` and `fig.height` chunk options. These are specified in inches, and will be automatically scaled down to fit within the handout margin.
+# Tufte Principles
 
-## Equations
+\newthought{Edward Tufte reminds you:} [^tufte]
 
-You can also include \LaTeX\ equations in the margin by explicitly invoking the `marginfigure` environment.
+- Have a properly chosen format and design
+- Use words, numbers and drawing together
+- Reflect balance, proportion, and a sense of relevant scale
+- Display an accessible complexity of detail \marginnote{How you turn dimensions in the *into visual cues* for your audience is everything.}
+- Have a anarrative quality, tell a story about the data
+- Draw in a professional manner, with the technical details done with care
+- Avoid content-free decoration, including **chartjunk**
 
-\begin{marginfigure}
-$$\frac{d}{dx}\left( \int_{0}^{x} f(u)\,du\right)=f(x).$$
-\caption{An equation}
-\end{marginfigure}
+# Planning
 
-Note the use of the `\caption` command to add additional text below the equation.
+Data visualization is a tool for communicating **a 
+specific feature** of a dataset in an approachable and efficient manner.\marginnote{
+Data visualization is done in service of the audience. If the goal is not to convey 
+information, it is art!}
 
-## Full Width Figures
+- Who is the audience? What is their background? Their biases?
+- What is the context? What would the user consider to be *good news*, what would 
+be *bad news*? How different are these? 
+- What does the design style say? 
+```{r, fig.margin = TRUE, fig.cap = "Theme says a lot. This says: `I am in a hurry'."}
+qplot(Sepal.Length, Petal.Length, data = iris, color = Species) + theme_excel()
+```
+- Are you designing this visualization for a specific data set, or to display 
+different data in a dashboard environment? 
+- How long will this visualization last? Will it be updated next year?
+- Does it need to be interactive?
 
-You can arrange for figures to span across the entire page by using the `fig.fullwidth` chunk option. 
+# Dimensionality
 
-```{r, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "Full width figure"}
-qplot(wt, mpg, data=mtcars, colour=factor(cyl))
+\newthought{If you got big data,} I feel sorry for you son. I got 99 problems but 
+data viz ain't one. [^jayz]
+
+- Spread the data out
+
+**Small Multiples**
+  * Allow the viewer to draw comparisons across small plots
+```{r, fig.margin = TRUE, fig.cap = "But be careful, can the user draw meaningful distinctions between the groups?"}
+qplot(attday, readSS, data = df) + theme_bw() + 
+  facet_wrap(~race) + labs(x = "Attendance Days", y = "Reading Scale Score")
 ```
 
-Note the use of the `fig.width` and `fig.height` chunk options to establish the proportions of the figure. Full width figures look much better if their height is minimized.
-
-## Main Column Figures
-
-Besides margin and full width figures, you can of course also include figures constrained to the main column.
-
-```{r, fig.cap = "Another figure"}
-qplot(factor(cyl), mpg, data = mtcars, geom = "boxplot")
+**Reduce the ink**
+  * Each point has too much "weight", so make them weigh less
+```{r, fig.margin = TRUE, fig.cap = "Use the alpha channel - it is intuitive."}
+qplot(attday, readSS, data = df, alpha = I(0.5)) + theme_bw() + labs(x = "Attendance Days", y = "Reading Scale Score")
 ```
 
-# Sidenotes
+**Add Reference Points**
+  * Big data is overwhelming without signposts
 
-One of the most prominent and distinctive features of this style is the extensive use of sidenotes. There is a wide margin to provide ample room for sidenotes and small figures. Any use of a footnote will automatically be converted to a sidenote. ^[This is a sidenote that was entered using a footnote.] 
+```{r, fig.margin = TRUE, fig.cap = "Scale invites the user to make comparisons."}
+qplot(attday, readSS, data = df[df$race=="H" | df$race=="W", ], 
+      alpha = I(0.5)) +   theme_bw() + 
+  geom_hline(yintercept = 600, size = I(1.02), color = 'dark green') + 
+  geom_hline(yintercept = 530, , size = I(1.02), 
+             linetype = 2, color = I("dark blue")) +
+  geom_hline(yintercept = 480, , size = I(1.02), 
+             linetype = 2, color = I("goldenrod")) +
+  geom_hline(yintercept = 420, , size = I(1.02), 
+             linetype = 3, color = I("red")) + 
+  annotate(geom="text", x = 135, y = 630, label = "Advanced", size = 3) + 
+  annotate(geom="text", x = 135, y = 560, label = "Proficient", size = 3) + 
+  annotate(geom="text", x = 135, y = 510, label = "Basic", size = 3) + 
+  annotate(geom="text", x = 135, y = 450, label = "Minimal", size = 3) + 
+      facet_wrap(~race, nrow=2) + 
+  labs(x = "Attendance Days", y = "Reading Scale Score") 
+```
 
-If you'd like to place ancillary information in the margin without the sidenote mark (the superscript number), you can use the `\marginnote` command. \marginnote{This is a margin note.  Notice that there isn't a number preceding the note.}
+- Model the data
 
-Note also that the two footnote references (`tufte_latex` and `books_be`, both defined below) were also included in the margin on the first page of this document.
+```{r fig.margin = TRUE, fig.cap = "But why invite, when you can make comparisons directly and show those instead? This figure shows only the loess curves for each subgroup on the relationship between attendance and reading scores."}
+ggplot(student_long[student_long$grade==5,],
+       aes(y = readSS, x = attday, color = race))+
+  geom_smooth(size=2) + theme_bw() + 
+  scale_colour_few() + 
+  labs(x="Attendance", y="Reading Score") + 
+  scale_y_continuous(limits=c(420, 580)) + labs(colour = "Race") +
+  theme(legend.position = c(0.35, 0.18), legend.direction = "horizontal")
 
-# Tables
-
-You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the Tufte handout style. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options as shown below to ensure the table is formatted correctly for inclusion in the document.
-
-```{r, results='asis'}
-library(xtable)
-options(xtable.comment = FALSE)
-options(xtable.booktabs = TRUE)
-xtable(head(mtcars[,1:6]), caption = "First rows of mtcars")
 ```
 
 
-[^tufte_latex]: https://code.google.com/p/tufte-latex/
-[^books_be]: http://www.edwardtufte.com/tufte/books_be
+# Pre-Deployment Checklist
+
+\newthought{Before you submit}, check that you have:
+
+- **Axis labels** and a **title**
+  + Can your audience immediately grasp the purpose?
+- A **legend**
+  + Is it clear what all shapes, colors, and other *dataink* represent?
+- A **scale**
+  + Is this data showing 
+- **Annotations**
+  + Have you labeled with enough context? Are there too many labels?
+
+Review this with *fresh eyes*. Can someone who has not seen this data before 
+undertand and interpret the main story here?
+
+Remember: If a picture is worth a thousand words, a good data visualization must 
+always be *better than a table.*
+
+# Technical Details
+
+The final format and use case should inform the design:
+
+```{r technologies,echo=FALSE,fig.margin = TRUE, fig.cap = "An opinonated ordering of the tools available to do data viz. Not comprehensive or complete and your mileage will vary depending on your comfort with certain technologies."}
+techs<-c("Adobe", "R", "Stata/SPSS", "D3", "Tableau", "JavaScript", 
+         "Processing", "Excel", "SAS")
+speed  <-c(1,10,5,6,8,4,5,9,4)
+quality<-c(10,8,5,9,7,8,9,2,4)
+web<-c(1,1,0,1,0,1,1,0,0)
+viz<-data.frame(techs=techs,speed=speed,quality=quality,web=web)
+
+qplot(speed, quality, data=viz, geom="point", color=factor(web), size = I(4)) + 
+  coord_cartesian(x = c(0,11), y = c(0,11)) + theme_dpi(base_size=8) +
+  geom_text(aes(label = techs), color="black", vjust=1.4, hjust=1) +
+  theme(axis.text=element_blank(), axis.ticks=element_blank(), 
+        legend.position = c(0.15, 0.1), legend.direction ="horizontal") +
+  labs(color="Web Ready") + 
+  scale_color_manual(values=c("0"="brown","1"="purple")) + 
+  labs(x = "Speed", y = "Quality") 
+```
+
+**Raster Files** 
+
+- **jpg** , **png** , **gif**. 
+- Fixed scale, aspect ratio, and size
+- Reasonable file size
+- Get blurry when you blow them up or stretch them
+- Viewable in almost any image viewing and editing system, including any modern web browser, PowerPoint, etc.
+
+**Vector Files**
+
+- **pdf** and **svg**
+- Infinitely zoomable, adjustable on the fly
+- Larger file size
+- Viewable and usable in fewer systems. SVGs can be used in modern web browsers. PDFs included in other PDF reports. 
+
+
+
+[^tufte]: http://www.edwardtufte.com/tufte/books_be
+[^jayz]: (adapted from Jay-Z, 2003)

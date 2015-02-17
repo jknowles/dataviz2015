@@ -1,0 +1,222 @@
+\documentclass{tufte-handout}
+
+% ams
+\usepackage{amssymb,amsmath}
+
+% utf8 encoding
+\usepackage[utf8]{inputenc}
+
+% graphix
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+% booktabs
+\usepackage{booktabs}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+% pandoc syntax highlighting
+
+% longtable
+
+% multiplecol
+\usepackage{multicol}
+
+% lipsum
+\usepackage{lipsum}
+
+% title / author / date
+\title{Data Visualization Fieldguide for Education}
+\author{Jared E. Knowles}
+\date{March 2015}
+
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Tufte Principles}\label{tufte-principles}
+
+\newthought{Edward Tufte reminds you} \footnote{\url{http://www.edwardtufte.com/tufte/books_be}}:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Have a properly chosen format and design
+\item
+  Use words, numbers and drawing together
+\item
+  Reflect balance, proportion, and a sense of relevant scale
+\item
+  Display an accessible complexity of detail\footnote{How you turn
+    dimensions in the \emph{into visual cues} for your audience is
+    everything.}
+\item
+  Have a anarrative quality, tell a story about the data
+\item
+  Draw in a professional manner, with the technical details done with
+  care
+\item
+  Avoid content-free decoration, including \textbf{chartjunk}
+\end{itemize}
+
+\section{Planning}\label{planning}
+
+Data visualization is a tool for communicating \textbf{a specific
+feature} of a dataset in an approachable and efficient
+manner.\marginnote{
+Data visualization is done in service of the audience. If the goal is not to convey 
+information, it is art!}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Who is the audience? What is their background? Their biases?
+\item
+  What is the context? What would the user consider to be \emph{good
+  news}, what would be \emph{bad news}? How different are these?
+\item
+  What does the design style say?
+
+  \begin{marginfigure}
+   \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-1-1.pdf}
+  \caption{This says: `I am in a hurry'.}
+  \end{marginfigure}
+\item
+  Are you designing this visualization for a specific data set, or to
+  display different data in a dashboard environment?
+\item
+  How long will this visualization last? Will it be updated next year?
+\item
+  Does it need to be interactive?
+\end{itemize}
+
+\section{Dimensionality}\label{dimensionality}
+
+\newthought{If you got big data,} I feel sorry for you son. I got 99
+problems but data viz ain't one. \footnote{(adapted from Jay-Z, 2003)}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Spread the data out
+\end{itemize}
+
+\textbf{Small Multiples} * Allow the viewer to draw comparisons across
+small plots
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-2-1.pdf}
+\caption{But be careful, can the user draw meaningful distinctions between the groups?}
+\end{marginfigure}
+
+\textbf{Reduce the ink} * Each point has too much ``weight'', so make
+them weigh less
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-3-1.pdf}
+\caption{Use the alpha channel - it is intuitive.}
+\end{marginfigure}
+
+\textbf{Add Reference Points} * Big data is overwhelming without
+signposts
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-4-1.pdf}
+\caption{Scale invites the user to make comparisons.}
+\end{marginfigure}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Model the data
+\end{itemize}
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-5-1.pdf}
+\caption{But why invite, when you can make comparisons directly and show those instead? This figure shows only the loess curves for each subgroup on the relationship between attendance and reading scores.}
+\end{marginfigure}
+
+\section{Pre-Deployment Checklist}\label{pre-deployment-checklist}
+
+\newthought{Before you submit}, check that you have:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \textbf{Axis labels} and a \textbf{title}
+\item
+  Can your audience immediately grasp the purpose?
+\item
+  A \textbf{legend}
+\item
+  Is it clear what all shapes, colors, and other \emph{dataink}
+  represent?
+\item
+  A \textbf{scale}
+\item
+  Is this data showing
+\item
+  \textbf{Annotations}
+\item
+  Have you labeled with enough context? Are there too many labels?
+\end{itemize}
+
+Review this with \emph{fresh eyes}. Can someone who has not seen this
+data before undertand and interpret the main story here?
+
+Remember: If a picture is worth a thousand words, a good data
+visualization must always be \emph{better than a table.}
+
+\section{Technical Details}\label{technical-details}
+
+The final format and use case should inform the design:
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/technologies-1.pdf}
+\caption{An opinonated ordering of the tools available to do data viz. Not comprehensive or complete and your mileage will vary depending on your comfort with certain technologies.}
+\end{marginfigure}
+
+\textbf{Raster Files}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \textbf{jpg} , \textbf{png} , \textbf{gif}.
+\item
+  Fixed scale, aspect ratio, and size
+\item
+  Reasonable file size
+\item
+  Get blurry when you blow them up or stretch them
+\item
+  Viewable in almost any image viewing and editing system, including any
+  modern web browser, PowerPoint, etc.
+\end{itemize}
+
+\textbf{Vector Files}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \textbf{pdf} and \textbf{svg}
+\item
+  Infinitely zoomable, adjustable on the fly
+\item
+  Larger file size
+\item
+  Viewable and usable in fewer systems. SVGs can be used in modern web
+  browsers. PDFs included in other PDF reports.
+\end{itemize}
+
+
+\end{document}
