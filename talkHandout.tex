@@ -44,9 +44,7 @@
 
 
 
-\section{Tufte Principles}\label{tufte-principles}
-
-\newthought{Edward Tufte reminds you} \footnote{\url{http://www.edwardtufte.com/tufte/books_be}}:
+Edward Tufte reminds you: \footnote{\url{http://www.edwardtufte.com/tufte/books_be}}
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -57,11 +55,14 @@
 \item
   Reflect balance, proportion, and a sense of relevant scale
 \item
-  Display an accessible complexity of detail\footnote{How you turn
-    dimensions in the \emph{into visual cues} for your audience is
-    everything.}
+  Display an accessible complexity of detail
 \item
   Have a anarrative quality, tell a story about the data
+
+  \begin{marginfigure}
+   \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-1-1.pdf}
+  \caption{Sometimes the story is very simple.}
+  \end{marginfigure}
 \item
   Draw in a professional manner, with the technical details done with
   care
@@ -69,7 +70,7 @@
   Avoid content-free decoration, including \textbf{chartjunk}
 \end{itemize}
 
-\section{Planning}\label{planning}
+\subsection{Planning}\label{planning}
 
 Data visualization is a tool for communicating \textbf{a specific
 feature} of a dataset in an approachable and efficient
@@ -88,8 +89,8 @@ information, it is art!}
   What does the design style say?
 
   \begin{marginfigure}
-   \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-1-1.pdf}
-  \caption{This says: `I am in a hurry'.}
+   \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-2-1.pdf}
+  \caption{Theme says a lot. This says: `I am in a hurry'.}
   \end{marginfigure}
 \item
   Are you designing this visualization for a specific data set, or to
@@ -100,38 +101,37 @@ information, it is art!}
   Does it need to be interactive?
 \end{itemize}
 
-\section{Dimensionality}\label{dimensionality}
+\begin{figure*}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-3-1.pdf}
+\caption{Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?}
+\end{figure*}
 
-\newthought{If you got big data,} I feel sorry for you son. I got 99
-problems but data viz ain't one. \footnote{(adapted from Jay-Z, 2003)}
+How you turn dimensions in the into visual cues for your audience is
+everything.
 
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  Spread the data out
-\end{itemize}
+\subsection{Dimensionality}\label{dimensionality}
+
+\emph{If you got big data, I feel sorry for you son. I got 99 problems
+but data viz ain't one.} \footnote{(adapted from Jay-Z, 2003)}
 
 \textbf{Small Multiples} * Allow the viewer to draw comparisons across
 small plots
 
-\begin{marginfigure}
- \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-2-1.pdf}
-\caption{But be careful, can the user draw meaningful distinctions between the groups?}
-\end{marginfigure}
-
 \textbf{Reduce the ink} * Each point has too much ``weight'', so make
-them weigh less
+them weigh less * This has another advantage of depicting uncertainty
+through less depth, useful when conveying data from a statistical model
+or sampling strategy
 
 \begin{marginfigure}
- \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-3-1.pdf}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-4-1.pdf}
 \caption{Use the alpha channel - it is intuitive.}
 \end{marginfigure}
 
 \textbf{Add Reference Points} * Big data is overwhelming without
-signposts
+signposts, so give plenty of them to your viewer.
 
 \begin{marginfigure}
- \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-4-1.pdf}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-5-1.pdf}
 \caption{Scale invites the user to make comparisons.}
 \end{marginfigure}
 
@@ -142,33 +142,25 @@ signposts
 \end{itemize}
 
 \begin{marginfigure}
- \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-5-1.pdf}
-\caption{But why invite, when you can make comparisons directly and show those instead? This figure shows only the loess curves for each subgroup on the relationship between attendance and reading scores.}
+ \includegraphics{talkHandout_files/figure-latex/unnamed-chunk-6-1.pdf}
+\caption{But why invite, when you can make comparisons directly and show those instead? This figure shows only the loess curves of the relationship between attendance and reading scores.}
 \end{marginfigure}
 
-\section{Pre-Deployment Checklist}\label{pre-deployment-checklist}
+\section{Review}\label{review}
 
-\newthought{Before you submit}, check that you have:
+\textbf{Before you submit, check that you have:}
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  \textbf{Axis labels} and a \textbf{title}
+  \textbf{Axis labels} and a \textbf{title}: Is your purpose clear?
 \item
-  Can your audience immediately grasp the purpose?
+  A \textbf{legend}: Are all symbols explained?
 \item
-  A \textbf{legend}
+  A \textbf{scale}: Is the relation of data points clear?
 \item
-  Is it clear what all shapes, colors, and other \emph{dataink}
-  represent?
-\item
-  A \textbf{scale}
-\item
-  Is this data showing
-\item
-  \textbf{Annotations}
-\item
-  Have you labeled with enough context? Are there too many labels?
+  \textbf{Annotations} Is there enough context? Are key points
+  highlighted?
 \end{itemize}
 
 Review this with \emph{fresh eyes}. Can someone who has not seen this
@@ -177,9 +169,9 @@ data before undertand and interpret the main story here?
 Remember: If a picture is worth a thousand words, a good data
 visualization must always be \emph{better than a table.}
 
-\section{Technical Details}\label{technical-details}
+\subsection{Technical Details}\label{technical-details}
 
-The final format and use case should inform the design:
+\textbf{The final format and use case should inform the design:}
 
 \begin{marginfigure}
  \includegraphics{talkHandout_files/figure-latex/technologies-1.pdf}
