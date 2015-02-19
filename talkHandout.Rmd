@@ -14,7 +14,7 @@ library(eeptools)
 library(ggplot2)
 library(ggthemes)
 require('hexbin')
-source("data/simulate_data.R")
+# source("data/simulate_data.R")
 # load("data/cache.rda")
 load("data/smalldata.rda")
 ```
@@ -26,7 +26,7 @@ Edward Tufte reminds you: [^tufte]
 - Reflect balance, proportion, and a sense of relevant scale
 - Display an accessible complexity of detail 
 - Have a anarrative quality, tell a story about the data
-```{r, fig.margin = TRUE, fig.cap = "Sometimes the story is very simple."}
+```{r introplot, fig.margin = TRUE, fig.cap = "Sometimes the story is very simple."}
 library(plyr)
 plotdf <- ddply(iris, .(Species), summarize, Plength = mean(Petal.Length))
 qplot(Species, Plength, data = plotdf, width = I(.5),
@@ -47,7 +47,7 @@ information, it is art!}
 - What is the context? What would the user consider to be *good news*, what would 
 be *bad news*? How different are these? 
 - What does the design style say? 
-```{r, fig.margin = TRUE, fig.cap = "Theme says a lot. This says: `I am in a hurry'."}
+```{r badexcel, fig.margin = TRUE, fig.cap = "Theme says a lot. This says: `I am in a hurry'."}
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species) + theme_excel()
 ```
 - Are you designing this visualization for a specific data set, or to display 
@@ -55,7 +55,7 @@ different data in a dashboard environment?
 - How long will this visualization last? Will it be updated next year?
 - Does it need to be interactive?
 
-```{r, fig.fullwidth = TRUE, fig.width = 10, fig.height = 2, fig.cap = "Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?"}
+```{r widesmallmultiples, fig.fullwidth = TRUE, fig.width = 10, fig.height = 2, fig.cap = "Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?"}
 qplot(attday, readSS, data = df) + theme_bw() + 
   facet_wrap(~race, nrow=1) + labs(x = "Attendance Days", y = "Reading Score")
 ```
@@ -66,61 +66,46 @@ How you turn dimensions in the into visual cues for your audience is everything.
 
 *If you got big data, I feel sorry for you son. I got 99 problems but 
 data viz ain't one.* [^jayz]
-
-**Small Multiples**
-  * Allow the viewer to draw comparisons across small plots
-
-**Reduce the ink**
-  * Each point has too much "weight", so make them weigh less
-  * This has another advantage of depicting uncertainty through less depth, useful 
-  when conveying data from a statistical model or sampling strategy
-  
-```{r, fig.margin = TRUE, fig.cap = "Use the alpha channel - it is intuitive."}
-qplot(attday, readSS, data = df, alpha = I(0.5)) + theme_bw() + labs(x = "Attendance Days", y = "Reading Scale Score")
-```
-
-**Add Reference Points**
-  * Big data is overwhelming without signposts, so give plenty of them to your viewer.
-
-```{r, fig.margin = TRUE, fig.cap = "Scale invites the user to make comparisons."}
-qplot(attday, readSS, data = df[df$race=="H" | df$race=="W", ], 
+ 
+```{r bigplot, fig.fullwidth = TRUE, fig.cap = "Combine context and strategies to make comparisons easier for the user.", fig.width = 10, fig.height = 2}
+qplot(attday, readSS, data = df[df$race != "A", ], 
       alpha = I(0.5)) +   theme_bw() + 
   geom_hline(yintercept = 600, size = I(1.02), color = 'dark green') + 
+  geom_smooth(method = 'lm') + 
 #   geom_hline(yintercept = 530, , size = I(1.02), 
 #              linetype = 2, color = I("dark blue")) +
 #   geom_hline(yintercept = 480, , size = I(1.02), 
 #              linetype = 2, color = I("goldenrod")) +
   geom_hline(yintercept = 420, , size = I(1.02), 
              linetype = 2, color = I("red")) + 
-  annotate(geom="text", x = 135, y = 630, label = "Advanced", size = 3) + 
+  annotate(geom="text", x = 140, y = 640, label = "Advanced", size = 3, 
+           fontface = "bold") + 
 #   annotate(geom="text", x = 135, y = 560, label = "Proficient", size = 3) + 
 #   annotate(geom="text", x = 135, y = 510, label = "Basic", size = 3) + 
-  annotate(geom="text", x = 135, y = 450, label = "Minimal", size = 3) + 
-      facet_wrap(~race, nrow=2) + 
+  annotate(geom="text", x = 140, y = 460, label = "Minimal", size = 3, 
+           fontface = "bold") + 
+      facet_wrap(~race, nrow = 1) + 
   labs(x = "Attendance Days", y = "Reading Scale Score") 
 ```
 
-- Model the data
 
-```{r fig.margin = TRUE, fig.cap = "But why invite, when you can make comparisons directly and show those instead? This figure shows only the loess curves of the relationship between attendance and reading scores."}
-ggplot(student_long[student_long$grade==5,],
-       aes(y = readSS, x = attday, color = race))+
-  geom_smooth(size=2) + theme_bw() + 
-  scale_colour_few() + 
-  labs(x="Attendance", y="Reading Score") + 
-  scale_y_continuous(limits=c(420, 580)) + labs(colour = "Race") +
-  theme(legend.position = c(0.35, 0.18), legend.direction = "horizontal")
+\marginnote{If each point has too much weight, use transparency or the alpha 
+channel to make them weigh less. This shows uncertainty and deemphasizes outliers 
+visually.}
+  
 
-```
 
 # Review
 
-**Before you submit, check that you have:**
+**Before you submit, check that you have:** \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
+ don't expect them to reach the same conclusion as you naturally.}
 
 - **Axis labels** and a **title**: Is your purpose clear?
 - A **legend**: Are all symbols explained?
-- A **scale**: Is the relation of data points clear?
-- **Annotations** Is there enough context? Are key points highlighted?
+- A **scale**: Is the relation of data points clear? 
+- **Annotations** Is there enough context? Are key points highlighted? 
+\marginnote{Don't be afraid to model the data. A line of best fit or a smoother can provide a good summary to viewers to make comparisons across panels.}
+
 
 Review this with *fresh eyes*. Can someone who has not seen this data before 
 undertand and interpret the main story here?
@@ -154,7 +139,6 @@ qplot(speed, quality, data=viz, geom="point", color=factor(web), size = I(4)) +
 
 - **jpg** , **png** , **gif**. 
 - Fixed scale, aspect ratio, and size
-- Reasonable file size
 - Get blurry when you blow them up or stretch them
 - Viewable in almost any image viewing and editing system, including any modern web browser, PowerPoint, etc.
 
@@ -162,8 +146,11 @@ qplot(speed, quality, data=viz, geom="point", color=factor(web), size = I(4)) +
 
 - **pdf** and **svg**
 - Infinitely zoomable, adjustable on the fly
-- Larger file size
 - Viewable and usable in fewer systems. SVGs can be used in modern web browsers. PDFs included in other PDF reports. 
+
+## References
+
+Some things to review. 
 
 [^tufte]: http://www.edwardtufte.com/tufte/books_be
 [^jayz]: (adapted from Jay-Z, 2003)

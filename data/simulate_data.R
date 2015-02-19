@@ -151,7 +151,7 @@ return(student)
   #########################################################################
   # Function: Draw some plots of the simulated data set
   #########################################################################
-
+# 
 simdiagread<-function(student)
 {
   qplot(readSS,geom='density',data=student)+facet_wrap(~grade)
@@ -161,7 +161,7 @@ simdiagmath<-function(student)
   qplot(mathSS,geom='density',data=student)+facet_wrap(~grade)
 }
 
-#Create a data frame
+# Create a data frame
   
   commonnames<-c('stuid','school','dist','cesa','year','female','grade','econ','disab','ell',
                'loc','age','readSS','readRS','mathSS','mathRS','dist_fay','sch_fay','Rprof',
