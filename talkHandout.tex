@@ -97,33 +97,31 @@ information, it is art!}
   display different data in a dashboard environment?
 \item
   How long will this visualization last? Will it be updated next year?
-\item
   Does it need to be interactive?
+\item
+  What visual elements best map onto the data I have -- shapes, sizes,
+  colors, or fill?
 \end{itemize}
 
-\begin{figure*}
- \includegraphics{talkHandout_files/figure-latex/widesmallmultiples-1.pdf}
-\caption{Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?}
-\end{figure*}
+\begin{figure}
+ \includegraphics{talkHandout_files/figure-latex/diamondplot-1.pdf}
+\caption{Shape and color work well for discrete data without too many levels, but one may work better than the other.}
+\end{figure}
 
-How you turn dimensions in the into visual cues for your audience is
-everything.
+\noindent How you turn dimensions in the into visual cues for your
+audience is everything.
 
 \subsection{Dimensionality}\label{dimensionality}
 
-\emph{If you got big data, I feel sorry for you son. I got 99 problems
-but data viz ain't one.} \footnote{(adapted from Jay-Z, 2003)}
+\emph{If you got big data, I feel sorry for you son. you got $99^{n}$
+problems but data viz ain't one.} \footnote{(adapted from Jay-Z, 2003)}
 
 \begin{figure*}
  \includegraphics{talkHandout_files/figure-latex/bigplot-1.pdf}
 \caption{Combine context and strategies to make comparisons easier for the user.}
 \end{figure*}
 
-\marginnote{If each point has too much weight, use transparency or the alpha 
-channel to make them weigh less. This shows uncertainty and deemphasizes outliers 
-visually.}
-
-\section{Review}\label{review}
+\textbf{Review}
 
 \textbf{Before you submit, check that you have:}
 \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
@@ -143,13 +141,14 @@ visually.}
   \marginnote{Don't be afraid to model the data. A line of best fit or a smoother can provide a good summary to viewers to make comparisons across panels.}
 \end{itemize}
 
-Review this with \emph{fresh eyes}. Can someone who has not seen this
-data before undertand and interpret the main story here?
-
-Remember: If a picture is worth a thousand words, a good data
+\noindent Remember: If a picture is worth a thousand words, a good data
 visualization must always be \emph{better than a table.}
 
-\subsection{Technical Details}\label{technical-details}
+\noindent Review this with \emph{fresh eyes}. Can someone who has not
+seen this data before undertand and interpret the main story here?
+\marginnote{If it is not clear, consider encoding a key feature twice -- e.g. using color and shape.}
+
+\textbf{Technical Details}
 
 \textbf{The final format and use case should inform the design:}
 
@@ -158,37 +157,32 @@ visualization must always be \emph{better than a table.}
 \caption{An opinonated ordering of the tools available to do data viz. Not comprehensive or complete and your mileage will vary depending on your comfort with certain technologies.}
 \end{marginfigure}
 
-\textbf{Raster Files}
-
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  \textbf{jpg} , \textbf{png} , \textbf{gif}.
+  Will this be shared on the web, in a document, or in a presentation?
 \item
-  Fixed scale, aspect ratio, and size
+  Will the users want to interact with the output?
 \item
-  Get blurry when you blow them up or stretch them
+  Is the visualization intended to be shared and used widely, or is it
+  for a short exploration?
 \item
-  Viewable in almost any image viewing and editing system, including any
-  modern web browser, PowerPoint, etc.
+  Do others need to be able to manipulate this image?
 \end{itemize}
 
-\textbf{Vector Files}
+\noindent Two main options. \textbf{Raster files} (.jpg, .png, and .gif)
+have a fixed scale, aspect ratio and size -- not good for resizing or
+reshaping. Easy to share. \textbf{Vector files} (.pdf and .svg) are
+zoomable and adjust to scale/aspect ratio changes. Viewable in browesrs,
+but not able to be opened in PowerPoint, Word, etc.
+\marginnote{If sharing matters most, go raster, if quality matters most consider vector files.}
 
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  \textbf{pdf} and \textbf{svg}
-\item
-  Infinitely zoomable, adjustable on the fly
-\item
-  Viewable and usable in fewer systems. SVGs can be used in modern web
-  browsers. PDFs included in other PDF reports.
-\end{itemize}
+\subsection{Learn More}\label{learn-more}
 
-\subsection{References}\label{references}
-
-Some things to review.
+\href{http://www.jaredknowles.com/presentations}{www.jaredknowles.com} •
+\href{http://forums.datacope.org}{\url{http://forums.datacope.org}} •
+\href{http://eagereyes.org/about}{\url{http://eagereyes.org/about}} •
+\href{http://datastori.es/}{\url{http://datastori.es/}}
 
 
 \end{document}

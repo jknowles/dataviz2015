@@ -13,7 +13,6 @@ opts_chunk$set(message=FALSE, error=FALSE, warning=FALSE, echo=FALSE, comment=NA
 library(eeptools)
 library(ggplot2)
 library(ggthemes)
-require('hexbin')
 # source("data/simulate_data.R")
 # load("data/cache.rda")
 load("data/smalldata.rda")
@@ -52,19 +51,40 @@ qplot(Sepal.Length, Petal.Length, data = iris, color = Species) + theme_excel()
 ```
 - Are you designing this visualization for a specific data set, or to display 
 different data in a dashboard environment? 
-- How long will this visualization last? Will it be updated next year?
-- Does it need to be interactive?
+- How long will this visualization last? Will it be updated next year? Does it need to be interactive?
+- What visual elements best map onto the data I have -- shapes, sizes, colors, or fill? 
 
-```{r widesmallmultiples, fig.fullwidth = TRUE, fig.width = 10, fig.height = 2, fig.cap = "Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?"}
+```{r diamondplot, fig.width = 8, fig.height = 2.5, fig.cap="Shape and color work well for discrete data without too many levels, but one may work better than the other."}
+library(gridExtra)
+data(diamonds)
+diamonds <- diamonds[diamonds$cut != "Fair", ]
+plotdf <- diamonds[sample(row.names(diamonds), 500), ]
+plotdf$cut <- factor(as.character(plotdf$cut))
+
+p1 <- qplot(log(carat), log(price), data = plotdf, color = color) + 
+  theme_few() + scale_color_few(pal = "dark") + 
+  guides(color= guide_legend(ncol = 2)) + 
+  theme(legend.position = c(0.8, 0.2)) + 
+  labs(x = "Log(carat)", y = "Log(price)")
+
+p2 <- qplot(log(carat), log(price), data = plotdf, shape = cut, alpha = I(0.4)) + 
+  theme_few() + theme(legend.position = c(0.8, 0.2)) + 
+  labs(x = "Log(carat)", y = "Log(price)")
+
+grid.arrange(p1, p2, ncol = 2, main = "Diamond Size and Price by Color and Cut")
+```
+
+
+```{r widesmallmultiples, eval=FALSE, fig.fullwidth = TRUE, fig.width = 10, fig.height = 2, fig.cap = "Small multiples spread the data out. But be careful, can the user draw meaningful distinctions between the groups from the data alone?"}
 qplot(attday, readSS, data = df) + theme_bw() + 
   facet_wrap(~race, nrow=1) + labs(x = "Attendance Days", y = "Reading Score")
 ```
 
-How you turn dimensions in the into visual cues for your audience is everything.
+\noindent How you turn dimensions in the into visual cues for your audience is everything.
 
 ## Dimensionality 
 
-*If you got big data, I feel sorry for you son. I got 99 problems but 
+*If you got big data, I feel sorry for you son. you got $99^{n}$ problems but 
 data viz ain't one.* [^jayz]
  
 ```{r bigplot, fig.fullwidth = TRUE, fig.cap = "Combine context and strategies to make comparisons easier for the user.", fig.width = 10, fig.height = 2}
@@ -89,13 +109,7 @@ qplot(attday, readSS, data = df[df$race != "A", ],
 ```
 
 
-\marginnote{If each point has too much weight, use transparency or the alpha 
-channel to make them weigh less. This shows uncertainty and deemphasizes outliers 
-visually.}
-  
-
-
-# Review
+**Review**  
 
 **Before you submit, check that you have:** \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
  don't expect them to reach the same conclusion as you naturally.}
@@ -106,14 +120,12 @@ visually.}
 - **Annotations** Is there enough context? Are key points highlighted? 
 \marginnote{Don't be afraid to model the data. A line of best fit or a smoother can provide a good summary to viewers to make comparisons across panels.}
 
+\noindent Remember: If a picture is worth a thousand words, a good data visualization must always be *better than a table.*
 
-Review this with *fresh eyes*. Can someone who has not seen this data before 
-undertand and interpret the main story here?
+\noindent Review this with *fresh eyes*. Can someone who has not seen this data before undertand and interpret the main story here? \marginnote{If it is not clear, consider encoding a key feature twice -- e.g. using color and shape.}
 
-Remember: If a picture is worth a thousand words, a good data visualization must 
-always be *better than a table.*
 
-## Technical Details
+**Technical Details**
 
 **The final format and use case should inform the design:**
 
@@ -135,22 +147,19 @@ qplot(speed, quality, data=viz, geom="point", color=factor(web), size = I(4)) +
   labs(x = "Speed", y = "Quality") 
 ```
 
-**Raster Files** 
+- Will this be shared on the web, in a document, or in a presentation? 
+- Will the users want to interact with the output? 
+- Is the visualization intended to be shared and used widely, or is it for a 
+short exploration? 
+- Do others need to be able to manipulate this image? 
 
-- **jpg** , **png** , **gif**. 
-- Fixed scale, aspect ratio, and size
-- Get blurry when you blow them up or stretch them
-- Viewable in almost any image viewing and editing system, including any modern web browser, PowerPoint, etc.
+\noindent Two main options. **Raster files** (.jpg, .png, and .gif) have a fixed scale, aspect ratio and size -- not good for resizing or reshaping. Easy to share.
+**Vector files** (.pdf and .svg) are zoomable and adjust to scale/aspect ratio changes. Viewable in browesrs, but not able to be opened in PowerPoint, Word, etc. \marginnote{If sharing matters most, go raster, if quality matters most consider vector files.}
 
-**Vector Files**
 
-- **pdf** and **svg**
-- Infinitely zoomable, adjustable on the fly
-- Viewable and usable in fewer systems. SVGs can be used in modern web browsers. PDFs included in other PDF reports. 
+## Learn More
 
-## References
-
-Some things to review. 
+[www.jaredknowles.com](http://www.jaredknowles.com/presentations) • [http://forums.datacope.org](http://forums.datacope.org) • [http://eagereyes.org/about](http://eagereyes.org/about) • [http://datastori.es/](http://datastori.es/)
 
 [^tufte]: http://www.edwardtufte.com/tufte/books_be
 [^jayz]: (adapted from Jay-Z, 2003)
