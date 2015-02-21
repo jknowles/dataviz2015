@@ -83,7 +83,7 @@ simscoreread <- function(student)
       {
         measerr <- rnorm(length(student$stuid),0,20)
         
-        readSS<-((rnorm(1,mean=14,sd=20)+rweibull(1,shape=9,scale=6))*white)+
+        readSS <- ((rnorm(1,mean=14,sd=20)+rweibull(1,shape=9,scale=6))*white)+
         ((rnorm(1,mean=-20,sd=20)+rweibull(1,shape=3,scale=7))*black)+
         ((rnorm(1,mean=-14,sd=20)+rweibull(1,shape=5,scale=9))*hisp)+
         ((rnorm(1,mean=-4,sd=20)+rweibull(1,shape=9,scale=6))*asian)+
@@ -219,8 +219,15 @@ student$teachq[student$econ==0 & student$asian==1]<-rnorm(200000,mean=85,sd=20)
 student$teachq[student$econ==1 & student$hisp==1]<-rnorm(200000,mean=55,sd=20)
 student$teachq[student$econ==0 & student$hisp==1]<-rnorm(200000,mean=75,sd=20)
 student$year <- '2000'
-student$attday<-round(rpois(150000,170)-rnorm(150000,mean=0,sd=5))
-student$attday[student$attday>180]<-180
+student$attday[student$econ==1 & student$black==1] <- round(rpois(200000, 140) - rnorm(200000,mean=0, sd=8))
+student$attday[student$econ==0 & student$black==1] <- round(rpois(200000, 155) - rnorm(200000,mean=0, sd=5))
+student$attday[student$econ==1 & student$white==1] <- round(rpois(200000, 155) - rnorm(200000,mean=0,sd=5))
+student$attday[student$econ==0 & student$white==1] <- round(rpois(200000, 170) - rnorm(200000,mean=0,sd=3))
+student$teachq[student$econ==1 & student$asian==1] <- round(rpois(200000, 160) - rnorm(200000,mean=0,sd=10))
+student$attday[student$econ==0 & student$asian==1] <- round(rpois(200000, 170) - rnorm(200000,mean=0,sd=4))
+student$attday[student$econ==1 & student$hisp==1] <- round(rpois(200000, 140) - rnorm(200000,mean=0,sd=5))
+student$attday[student$econ==0 & student$hisp==1] <- round(rpois(200000, 160) - rnorm(200000,mean=0,sd=5))
+student$attday[student$attday > 180] <- 180
 
 #########################################################################
 # Create schools and districts, and assign students to schools and districts.
@@ -299,8 +306,20 @@ student <- simscoremath(student)
   simdiagmath(student)
 
 ## Assign proficiency levels
-student <- proflvl(student)
 
+student$attFactor <- runif(nrow(student), min = .0005, max = 0.1)
+student$attFactor2 <- runif(nrow(student), min = .001, max = 0.15)^2
+student$readSS <- student$readSS + (student$attFactor * student$attday) + 
+  (student$attFactor2 * student$attday^2)
+  
+student$attFactor <- runif(nrow(student), min = .0005, max = 0.1)
+student$attFactor2 <- runif(nrow(student), min = .001, max = 0.15)^2
+student$mathSS <- student$mathSS + (student$attFactor * student$attday) + 
+  (student$attFactor2 * student$attday^2)
+student$attFactor <- NULL
+student$attFactor2 <- NULL
+
+student <- proflvl(student)
 
 #########################################################################
 # Create more years of data.
