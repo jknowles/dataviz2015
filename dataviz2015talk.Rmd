@@ -133,7 +133,7 @@ elements (e.g. color, size, shape, etc.)
 - **Smart use of dimensions allows us to increase the information density of our charts**
 
 
-```{r echo=FALSE, out.width='740px', out.height='300px', fig.align='center'}
+```{r echo=FALSE, out.width='740px', out.height='300px', fig.align='center', fig.width=8, fig.height = 3.45}
 plotdf <- df[df$grade < 6, ]
 plotdf$mathSS[plotdf$grade == 5 & plotdf$readSS < 400] <- plotdf$mathSS[plotdf$grade == 5 & plotdf$readSS < 400] + 65
 plotdf$mathSS[plotdf$grade == 5 & plotdf$readSS > 400 & plotdf$readSS < 500] <- plotdf$mathSS[plotdf$grade == 5 & plotdf$readSS > 400 & plotdf$readSS < 500] + 35
@@ -218,7 +218,7 @@ TODO: Add a plot showing examples of this here.
 
 ## Mapping That Does Not Work
 
-```{r badscale}
+```{r badscale, echo=FALSE}
 mtcars$wt2 <- cut(mtcars$wt, breaks = quantile(mtcars$wt, probs = c(0, 0.25, 0.5, 
                                                                    0.75, 1)))
 qplot(hp, mpg, data = mtcars, shape = factor(wt2)) + theme_classic() + 
@@ -237,7 +237,7 @@ Shape      |  *does not make sense*         |    A shape for each value
 
 ## Mapping That Does Not Work (2)
 
-```{r badscale2}
+```{r badscale2, echo=FALSE}
 mtcars$wt2 <- cut(mtcars$wt, breaks = quantile(mtcars$wt, 
                                                probs = c(0, 0.25, 0.5, 0.75, 1)))
 
@@ -433,12 +433,14 @@ ggplot(schooldat[schooldat$schid<25 & schooldat$grade==3,],
 
 ## Caterpillar Plots
 
-```{r catplot1, echo=FALSE, out.width='7250px', out.height='420px'}
-ggplot(schooldat[schooldat$schid<25 & schooldat$grade==3, ],
-       aes(x = reorder(factor(schid), meanR), ymin=meanR - 0.5 * sdR, 
-           ymax=meanR + 0.5 * sdR, color=perecon)) + 
-  geom_errorbar(alpha=0.7) +
-  geom_point(aes(y=meanR,size=count)) +
+```{r catplot1, echo=FALSE, out.width='725px', out.height='420px'}
+plotdf <- schooldat[schooldat$schid<25 & schooldat$grade==3, ]
+plotdf$schid <- factor(plotdf$schid)
+ggplot(plotdf, aes(x = reorder(schid, meanR), 
+                   ymin=meanR - 0.5 * sdR, ymax=meanR + 0.5 * sdR, 
+                   color=perecon)) + 
+  geom_errorbar(alpha=0.4) +
+  geom_point(aes(y=meanR, size=count)) +
   theme_dpi() + 
   labs(x="School", y="Mean Reading Score", 
        title="Mean School Reading Score", size = "Pupils", color = "% FRL") +
@@ -471,8 +473,9 @@ How could it be done?
 ## 600,000 Observations Too Many
 
 ```{r rawdata1, echo=FALSE, dev='png', out.width = '740px', out.height = '550px'}
-qplot(readSS,mathSS,data=student_long)+theme_dpi()+
-  labs(x="Reading",y="Math",title="Relationship with Math and Reading")
+qplot(readSS, mathSS, data=student_long) + 
+  theme_dpi() + labs(x = "Reading", y = "Math", 
+                     title = "Relationship with Math and Reading")
 ```
 
 ## Strategies for Presenting Big Data
@@ -493,13 +496,15 @@ be successful
 3. **Add Reference Points**  
   * 600,000 observations in one panel is not meaningful and overwhelms the viewer
 
-<!---
-Talk about the small multiples.
-Talk about the line of best fit through this data and how it is a model. 
---> 
-## What About This
+## Small Multiples
 
 >- Edward Tufte and others recommend **small multiples**, a technique of repeating a plot across groups to compare relationships in multiple dimensions 
+>- Invites comparisons across groups
+>- Multiples can be categorical, or you can split the data into quartiles
+>- Good for exploring relationships between variables and subgroups
+>- Related to a scatterplot matrix
+
+## Example
 
 ```{r rawdata2, echo=FALSE, dev='png', out.width = '575px', out.height = '550px'}
 qplot(readSS, mathSS, data=student_long, alpha=I(0.01)) + facet_wrap(~grade) + 
@@ -513,16 +518,18 @@ qplot(readSS, mathSS, data=student_long, alpha=I(0.01)) + facet_wrap(~grade) +
 ```{r rawdata3,echo=FALSE,dev='png'}
 qplot(readSS,mathSS,data=student_long,alpha=I(0.05))+facet_grid(race~grade)+
   theme_dpi() + geom_smooth() +
-  labs(x="Reading",y="Math",title="Relationship with Math and Reading by Grade and Race")
+  labs(x="Reading", y="Math", 
+       title="Relationship with Math and Reading by Grade and Race")
 ```
 
 ## Binning Data
 
 ```{r rawdata4,echo=FALSE,dev='svg'}
-qplot(readSS,mathSS,data=subset(student_long,grade==3),geom='hex')+
+qplot(readSS, mathSS, data=subset(student_long,grade==3), geom='hex')+
   facet_grid(econ~disab)+
   theme_dpi()+geom_smooth()+
-  labs(x="Reading",y="Math",title="Relationship with Math and Reading \n FRPL and SwD Status")
+  labs(x="Reading", y="Math", 
+       title="Relationship with Math and Reading \n FRPL and SwD Status")
 ```
 
 ## Modeling the Data
@@ -534,12 +541,30 @@ qplot(readSS,mathSS,data=subset(student_long,grade==3),geom='hex')+
 
 ```{r echo=FALSE,out.width='800px'}
 ggplot(student_long[student_long$grade==5,],
-       aes(y=readSS,x=mathSS,color=race))+
-  geom_smooth(size=2)+theme_dpi()+
-  labs(x="Math",y="Read",title="Smoothers of Assessment Score \n By Race")
+       aes(y=readSS,x=mathSS,color=race)) + geom_smooth(size=2) + 
+  theme_dpi() + 
+  labs(x="Math", y="Read", title="Smoothers of Assessment Score \n By Race")
 
 ```
 
+## Correlation Matrix
+
+```{r corrMatrix, echo=FALSE, eval=FALSE}
+library(GGally)
+pairLabels <- c("Read SS", "Math SS", "Teacher Qual.", "School Avg", "Att. Day")
+
+tmpdf <- student[student$grade == 4, c("readSS", "mathSS", "teachq", 
+                                       "schoolavg", "attday")]
+
+tmpdf <- tmpdf[sample(1:nrow(tmpdf), 500), ]
+ggpairs(tmpdf, 
+        columnLabels = pairLabels,
+        lower = list(continuous = "smooth"), 
+        upper = list(continuous = 'cor'), 
+        title = "Pairs Plot of Key Control Variables")
+rm(tmpdf)
+
+```
 
 ## Comparing Model Performance
 
