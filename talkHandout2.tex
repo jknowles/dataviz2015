@@ -1,0 +1,195 @@
+\documentclass{tufte-handout}
+
+% ams
+\usepackage{amssymb,amsmath}
+
+% utf8 encoding
+\usepackage[utf8]{inputenc}
+
+% graphix
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+% booktabs
+\usepackage{booktabs}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+% pandoc syntax highlighting
+
+% longtable
+
+% multiplecol
+\usepackage{multicol}
+
+% lipsum
+\usepackage{lipsum}
+\usepackage{wallpaper}
+
+% title / author / date
+\title{Data Visualization Fieldguide for Education}
+\author{Jared E. Knowles}
+\date{March 2015}
+
+
+\begin{document}
+\LRCornerWallPaper{0.25}{img/SmallDataCopeLogo.jpg}
+\maketitle
+
+
+\vspace{5mm}
+\noindent \emph{Tufte's Tips}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Have a properly chosen format and design
+\item
+  Use words, numbers and drawing together
+\item
+  Reflect balance, proportion, and a sense of relevant scale
+\item
+  Display an accessible complexity of detail
+\item
+  Have a anarrative quality, tell a story about the data
+
+  \begin{marginfigure}
+   \includegraphics{talkHandout_files/figure-latex/introplot-1.pdf}
+  \caption{Sometimes the story is very simple.}
+  \end{marginfigure}
+\item
+  Draw in a professional manner, with the technical details done with
+  care
+\item
+  Avoid content-free decoration, including \textbf{chartjunk}
+\end{itemize}
+
+\vspace{2.5mm}
+\noindent \emph{Planning}
+
+\noindent Data visualization is a tool for communicating \textbf{a
+specific feature} of a dataset in an approachable and efficient
+manner.\marginnote{
+Data visualization is done in service of the audience. If the goal is not to convey 
+information, it is art!}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Who is the audience? What is their background? Their biases?
+\item
+  What is the context? What would the user consider to be \emph{good
+  news}, what would be \emph{bad news}? How different are these?
+\item
+  What does the design style say?
+
+  \begin{marginfigure}
+   \includegraphics{talkHandout_files/figure-latex/badexcel-1.pdf}
+  \caption{Theme says a lot. This says: `I am in a hurry'.}
+  \end{marginfigure}
+\item
+  Are you designing this visualization for a specific data set, or to
+  display different data in a dashboard environment?
+\item
+  How long will this visualization last? Will it be updated next year?
+  Does it need to be interactive?
+\item
+  What visual elements best map onto the data I have -- shapes, sizes,
+  colors, or fill?
+  \marginnote{How you turn dimensions in the into visual cues for your audience is everything.}
+\end{itemize}
+
+\begin{figure*}
+ \includegraphics{talkHandout_files/figure-latex/diamondplot-1.pdf}
+\caption{Shape and color work well for discrete data without too many levels, but one may work better than the other.}
+\end{figure*}
+\clearpage
+\noindent \emph{Dimensionality}
+
+\noindent \emph{If you got big data, I feel sorry for you son. you got \(99^{n}\)
+problems but data viz ain't one.} \footnote{(adapted from Jay-Z, 2003)}
+
+\begin{figure*}
+ \includegraphics{talkHandout_files/figure-latex/bigplot-1.pdf}
+\caption{Combine context and strategies to make comparisons easier for the user.}
+\end{figure*}
+
+\noindent \emph{Review}
+
+\noindent Before you submit, check that you have:
+\marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
+ don't expect them to reach the same conclusion as you naturally.}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \textbf{Axis labels} and a \textbf{title}: Is your purpose clear?
+\item
+  A \textbf{legend}: Are all symbols explained?
+\item
+  A \textbf{scale}: Is the relation of data points clear?
+\item
+  \textbf{Annotations}: Is there enough context? Are key points
+  highlighted?
+  \marginnote{Don't be afraid to model the data. A line of best fit or a smoother can provide a good summary to viewers to make comparisons across panels.}
+\end{itemize}
+
+\noindent Remember: If a picture is worth a thousand words, a good data
+visualization must always be \emph{better than a table.}
+
+\vspace{2.5mm}
+
+\noindent Review this with \emph{fresh eyes}. Can someone who has not
+seen this data before undertand and interpret the main story here?
+\marginnote{If it is not clear, consider encoding a key feature twice -- e.g. using color and shape.}
+
+\vspace{2.5mm}
+\noindent \emph{Technical Details}
+
+\noindent The final format and use case should inform the design:
+
+\begin{marginfigure}
+ \includegraphics{talkHandout_files/figure-latex/technologies-1.pdf}
+\caption{An opinonated ordering of the tools available to do data viz. Not comprehensive or complete and your mileage will vary depending on your comfort with certain technologies.}
+\end{marginfigure}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Will this be shared on the web, in a document, or in a presentation?
+\item
+  Will the users want to interact with the output?
+\item
+  Is the visualization intended to be shared and used widely, or is it
+  for a short exploration?
+\item
+  Do others need to be able to manipulate this image?
+\end{itemize}
+
+\noindent \textbf{Raster files} (.jpg, .png, and .gif) have a fixed scale, 
+aspect ratio and size -- not good for resizing or reshaping. Easy to share.
+
+\vspace{2.5mm}
+
+\noindent \textbf{Vector files} (.pdf and .svg) are zoomable and adjust to
+scale/aspect ratio changes. Viewable in browesrs, but not able to be
+opened in PowerPoint, Word, etc.
+\marginnote{If sharing matters most, go raster, if quality matters most consider vector files.}
+
+\vspace{2.5mm}
+\noindent \emph{Learn More}
+
+\noindent \href{http://www.jaredknowles.com/presentations}{\url{www.jaredknowles.com}} •
+\href{http://forums.datacope.org}{\url{http://forums.datacope.org}} •
+\href{http://eagereyes.org/about}{\url{http://eagereyes.org/about}} •
+\href{http://datastori.es/}{\url{http://datastori.es/}}
+
+
+\end{document}

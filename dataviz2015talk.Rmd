@@ -11,7 +11,7 @@ output:
 library(knitr)
 opts_chunk$set(fig.width=8, fig.height=5.5, message=FALSE, error=FALSE, 
                warning=FALSE, echo=TRUE, dev=c("svg"), comment=NA, 
-               out.width="750px", out.height="550px", fig.align='center')
+               out.width="725px", out.height="525px", fig.align='center')
 library(eeptools)
 library(ggplot2)
 library(ggthemes)

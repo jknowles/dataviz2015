@@ -18,7 +18,7 @@ library(ggthemes)
 load("data/smalldata.rda")
 ```
 
-Edward Tufte reminds you: [^tufte]
+\noindent \emph{Tufte's Tips}
 
 - Have a properly chosen format and design
 - Use words, numbers and drawing together
@@ -30,14 +30,15 @@ library(plyr)
 plotdf <- ddply(iris, .(Species), summarize, Plength = mean(Petal.Length))
 qplot(Species, Plength, data = plotdf, width = I(.5),
        geom='bar', 
-      stat = 'identity') + theme_tufte() + labs(y = "Petal Length (cm)") 
+      stat = 'identity') + theme_tufte() + 
+  labs(y = "Petal Length (cm)", title = "Orchid Petal Size") 
 ```
 - Draw in a professional manner, with the technical details done with care
 - Avoid content-free decoration, including **chartjunk**
 
-## Planning
+\noindent \emph{Planning}
 
-Data visualization is a tool for communicating **a 
+\noindent Data visualization is a tool for communicating **a 
 specific feature** of a dataset in an approachable and efficient manner.\marginnote{
 Data visualization is done in service of the audience. If the goal is not to convey 
 information, it is art!}
@@ -52,26 +53,39 @@ qplot(Sepal.Length, Petal.Length, data = iris, color = Species) + theme_excel()
 - Are you designing this visualization for a specific data set, or to display 
 different data in a dashboard environment? 
 - How long will this visualization last? Will it be updated next year? Does it need to be interactive?
-- What visual elements best map onto the data I have -- shapes, sizes, colors, or fill? 
-
-```{r diamondplot, fig.width = 8, fig.height = 2.5, fig.cap="Shape and color work well for discrete data without too many levels, but one may work better than the other."}
+- What visual elements best map onto the data I have -- shapes, sizes, colors, or fill?   \marginnote{How you turn dimensions in the into visual cues for your audience is everything.}
+  
+```{r diamondplot, fig.width = 8, fig.height = 2.1, fig.cap="Shape and color work well for discrete data without too many levels, but one may work better than the other. Sometimes a line of best fit works best.", fig.fullwidth = TRUE}
 library(gridExtra)
 data(diamonds)
 diamonds <- diamonds[diamonds$cut != "Fair", ]
 plotdf <- diamonds[sample(row.names(diamonds), 500), ]
-plotdf$cut <- factor(as.character(plotdf$cut))
+plotdf$cut3 <- 0
+plotdf$cut3 <- ifelse(plotdf$cut == "Ideal", 4, plotdf$cut3)
+plotdf$cut3 <- ifelse(plotdf$cut == "Premium", 3, plotdf$cut3)
+plotdf$cut3 <- ifelse(plotdf$cut == "Very Good", 2, plotdf$cut3)
+plotdf$cut3 <- ifelse(plotdf$cut == "Good", 1, plotdf$cut3)
+plotdf$cut2 <- factor(as.character(plotdf$cut))
 
-p1 <- qplot(log(carat), log(price), data = plotdf, color = color) + 
-  theme_few() + scale_color_few(pal = "dark") + 
+p1 <- qplot(log(carat), log(price), data = plotdf, color = cut3) + 
+  theme_bw(base_size = 8) +scale_color_continuous_tableau() + 
   guides(color= guide_legend(ncol = 2)) + 
-  theme(legend.position = c(0.8, 0.2)) + 
-  labs(x = "Log(carat)", y = "Log(price)")
+  theme(legend.position = c(0.8, 0.35)) + 
+  labs(x = "Log(carat)", y = "Log(price)", color = "Cut")
 
 p2 <- qplot(log(carat), log(price), data = plotdf, shape = cut, alpha = I(0.4)) + 
-  theme_few() + theme(legend.position = c(0.8, 0.2)) + 
-  labs(x = "Log(carat)", y = "Log(price)")
+  theme_bw(base_size = 8) + theme(legend.position = c(0.15, 0.78)) + 
+  guides(shape= guide_legend(ncol = 2)) + 
+  labs(x = "Log(carat)", y = "Log(price)", shape = "Cut")
 
-grid.arrange(p1, p2, ncol = 2, main = "Diamond Size and Price by Color and Cut")
+p3 <- qplot(log(carat), log(price), data = plotdf, alpha = I(0.4), 
+            geom = 'smooth', se = FALSE, size = I(1.1), color = I("black"),
+            linetype = cut) + 
+  theme_bw(base_size = 8) + theme(legend.position = c(0.15, 0.78)) + 
+  guides(linetype= guide_legend(ncol = 2)) + 
+  labs(x = "Log(carat)", y = "Log(price)", shape = "Cut")
+
+grid.arrange(p1, p2, p3, ncol = 3, main = "Diamond Size and Price by Color and Cut")
 ```
 
 
@@ -80,9 +94,9 @@ qplot(attday, readSS, data = df) + theme_bw() +
   facet_wrap(~race, nrow=1) + labs(x = "Attendance Days", y = "Reading Score")
 ```
 
-\noindent How you turn dimensions in the into visual cues for your audience is everything.
 
-## Dimensionality 
+
+\noindent \emph{Dimensionality}
 
 *If you got big data, I feel sorry for you son. you got $99^{n}$ problems but 
 data viz ain't one.* [^jayz]
@@ -109,25 +123,25 @@ qplot(attday, readSS, data = df[df$race != "A", ],
 ```
 
 
-**Review**  
+\noindent \emph{Review}
 
-**Before you submit, check that you have:** \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
+\noindent \textbf{Before you submit}, check that you have: \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
  don't expect them to reach the same conclusion as you naturally.}
 
 - **Axis labels** and a **title**: Is your purpose clear?
 - A **legend**: Are all symbols explained?
 - A **scale**: Is the relation of data points clear? 
-- **Annotations** Is there enough context? Are key points highlighted? 
+- **Annotations**: Is there enough context? Are key points highlighted? 
 \marginnote{Don't be afraid to model the data. A line of best fit or a smoother can provide a good summary to viewers to make comparisons across panels.}
 
-\noindent Remember: If a picture is worth a thousand words, a good data visualization must always be *better than a table.*
+\noindent Remember: If a picture is worth a thousand words, a good data visualization must always be *better than a table.*  
+   
+\noindent Review this with *fresh eyes*. Can someone who has not seen this data before undertand and interpret the main story here?   \marginnote{If it is not clear, consider encoding a key feature twice -- e.g. using color and shape.}
+  
+  
+\noindent \emph{Technical Details}
 
-\noindent Review this with *fresh eyes*. Can someone who has not seen this data before undertand and interpret the main story here? \marginnote{If it is not clear, consider encoding a key feature twice -- e.g. using color and shape.}
-
-
-**Technical Details**
-
-**The final format and use case should inform the design:**
+\noindent The final format and use case should inform the design:
 
 ```{r technologies,echo=FALSE,fig.margin = TRUE, fig.cap = "An opinonated ordering of the tools available to do data viz. Not comprehensive or complete and your mileage will vary depending on your comfort with certain technologies."}
 techs<-c("Adobe", "R", "Stata/SPSS", "D3", "Tableau", "JavaScript", 
@@ -153,11 +167,12 @@ qplot(speed, quality, data=viz, geom="point", color=factor(web), size = I(4)) +
 short exploration? 
 - Do others need to be able to manipulate this image? 
 
-\noindent Two main options. **Raster files** (.jpg, .png, and .gif) have a fixed scale, aspect ratio and size -- not good for resizing or reshaping. Easy to share.
-**Vector files** (.pdf and .svg) are zoomable and adjust to scale/aspect ratio changes. Viewable in browesrs, but not able to be opened in PowerPoint, Word, etc. \marginnote{If sharing matters most, go raster, if quality matters most consider vector files.}
+\noindent Two main options. **Raster files** (.jpg, .png, and .gif) have a fixed scale, aspect ratio and size -- not good for resizing or reshaping. Easy to share.  
+  
+**Vector files** (.pdf and .svg) are zoomable and adjust to scale/aspect ratio changes. Viewable in browesrs, but not able to be opened in PowerPoint, Word, etc. \marginnote{If sharing matters most, go raster, if quality matters most consider vector files.}  
+  
 
-
-## Learn More
+\noindent \emph{Learn More}
 
 [www.jaredknowles.com](http://www.jaredknowles.com/presentations) • [http://forums.datacope.org](http://forums.datacope.org) • [http://eagereyes.org/about](http://eagereyes.org/about) • [http://datastori.es/](http://datastori.es/)
 
