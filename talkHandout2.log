@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.3)  21 FEB 2015 17:00
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.3)  23 FEB 2015 21:33
 entering extended mode
 **talkHandout2.tex
 (C:\Users\Jared\Projects\dataviz2015\talkHandout2.tex
@@ -1165,16 +1165,13 @@ LaTeX Warning: Marginpar on page 2 moved.
 LaTeX Warning: Marginpar on page 2 moved.
 
 
-LaTeX Warning: Marginpar on page 2 moved.
-
-
 <talkHandout_files/figure-latex/technologies-1.pdf, id=39, 289.08pt x 180.675pt
 >
 File: talkHandout_files/figure-latex/technologies-1.pdf Graphic file (type pdf)
 
  <use talkHandout_files/figure-latex/technologies-1.pdf>
 Package pdftex.def Info: talkHandout_files/figure-latex/technologies-1.pdf used
- on input line 159.
+ on input line 157.
 (pdftex.def)             Requested size: 143.99709pt x 89.99817pt.
 
 
@@ -1183,45 +1180,45 @@ LaTeX Warning: Marginpar on page 2 moved.
 
 LaTeX Warning: Marginpar on page 2 moved.
 
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 189.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 187.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\bera\t1fvm.fd"
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 8.50006pt on input line 189.
+(Font)              scaled to size 8.50006pt on input line 187.
 
 
 Package bibentry Warning: You have used \nobibliography* 
 (bibentry)                without a following \bibliography.
 (bibentry)                You may not be able to run BibTeX.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 195.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 193.
 File: img/SmallDataCopeLogo.jpg Graphic file (type jpg)
 <use img/SmallDataCopeLogo.jpg>
-Package pdftex.def Info: img/SmallDataCopeLogo.jpg used on input line 195.
+Package pdftex.def Info: img/SmallDataCopeLogo.jpg used on input line 193.
 (pdftex.def)             Requested size: 153.58823pt x 67.83476pt.
  [2
 
  <C:/Users/Jared/Projects/dataviz2015/talkHandout_files/figure-latex/bigplot-1.
 pdf> <C:/Users/Jared/Projects/dataviz2015/talkHandout_files/figure-latex/techno
 logies-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 195.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 193.
 
 (C:\Users\Jared\Projects\dataviz2015\talkHandout2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 195.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 195.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 193.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 193.
 Package rerunfilecheck Info: File `talkHandout2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 195.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 193.
  ) 
 Here is how much of TeX's memory you used:
  13642 strings out of 493921
  189866 string characters out of 3144876
- 379764 words of memory out of 3000000
+ 379774 words of memory out of 3000000
  16664 multiletter control sequences out of 15000+200000
  55222 words of font info for 92 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 41i,14n,52p,299b,401s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,14n,52p,300b,401s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/fpl/fplrc8a.pfb><C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/fpl/fplrij8a.pfb><C:/Program Files (x86)/MiK
@@ -1229,7 +1226,7 @@ TeX 2.9/fonts/type1/bera/fvmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
 pe1/urw/palatino/uplb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/
 palatino/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/palatino
 /uplri8a.pfb>
-Output written on talkHandout2.pdf (2 pages, 298319 bytes).
+Output written on talkHandout2.pdf (2 pages, 298526 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  3 named destinations out of 1000 (max. 500000)

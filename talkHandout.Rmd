@@ -71,19 +71,25 @@ p1 <- qplot(log(carat), log(price), data = plotdf, color = cut3) +
   theme_bw(base_size = 8) +scale_color_continuous_tableau() + 
   guides(color= guide_legend(ncol = 2)) + 
   theme(legend.position = c(0.8, 0.35)) + 
-  labs(x = "Log(carat)", y = "Log(price)", color = "Cut")
+  labs(x = "Log(carat)", y = "Log(price)", color = "Cut")+ 
+  theme(legend.key.size = unit(3.5, "mm"), legend.text = element_text(size = 4),
+        legend.key.width = unit(3, "mm"), legend.margin = unit(1, "mm"))
 
 p2 <- qplot(log(carat), log(price), data = plotdf, shape = cut, alpha = I(0.4)) + 
-  theme_bw(base_size = 8) + theme(legend.position = c(0.15, 0.78)) + 
+  theme_bw(base_size = 8) + theme(legend.position = c(0.22, 0.78)) + 
   guides(shape= guide_legend(ncol = 2)) + 
-  labs(x = "Log(carat)", y = "Log(price)", shape = "Cut")
+  labs(x = "Log(carat)", y = "Log(price)", shape = "Cut") + 
+  theme(legend.key.size = unit(4.5, "mm"), legend.text = element_text(size = 4),
+        legend.key.width = unit(3, "mm"), legend.margin = unit(0, "mm"))
 
 p3 <- qplot(log(carat), log(price), data = plotdf, alpha = I(0.4), 
             geom = 'smooth', se = FALSE, size = I(1.1), color = I("black"),
             linetype = cut) + 
-  theme_bw(base_size = 8) + theme(legend.position = c(0.15, 0.78)) + 
+  theme_bw(base_size = 8) + theme(legend.position = c(0.22, 0.78)) + 
   guides(linetype= guide_legend(ncol = 2)) + 
-  labs(x = "Log(carat)", y = "Log(price)", shape = "Cut")
+  labs(x = "Log(carat)", y = "Log(price)", linetype = "Cut")+ 
+  theme(legend.key.size = unit(.45, "cm"), legend.text = element_text(size = 4),
+        legend.key.width = unit(.25, "cm"), legend.margin = unit(0, "cm"))
 
 grid.arrange(p1, p2, p3, ncol = 3, main = "Diamond Size and Price by Color and Cut")
 ```
@@ -101,7 +107,7 @@ qplot(attday, readSS, data = df) + theme_bw() +
 *If you got big data, I feel sorry for you son. you got $99^{n}$ problems but 
 data viz ain't one.* [^jayz]
  
-```{r bigplot, fig.fullwidth = TRUE, fig.cap = "Combine context and strategies to make comparisons easier for the user.", fig.width = 10, fig.height = 2}
+```{r bigplot, fig.fullwidth = TRUE, fig.cap = "Add reference lines and annotate your charts with text. Guide the viewer, do not assume. Craete visual context to invite and aid comparisons for the user.", fig.width = 10, fig.height = 2}
 qplot(attday, readSS, data = df[df$race != "A", ], 
       alpha = I(0.5)) +   theme_bw() + 
   geom_hline(yintercept = 600, size = I(1.02), color = 'dark green') + 
@@ -125,8 +131,7 @@ qplot(attday, readSS, data = df[df$race != "A", ],
 
 \noindent \emph{Review}
 
-\noindent \textbf{Before you submit}, check that you have: \marginnote{Add reference lines and annotate your charts with text. Tell the viewer,
- don't expect them to reach the same conclusion as you naturally.}
+\noindent \textbf{Before you submit}, check that you have:
 
 - **Axis labels** and a **title**: Is your purpose clear?
 - A **legend**: Are all symbols explained?
