@@ -1,10 +1,5 @@
 <style type="text/css">
   .reveal h1 { font-size: 1.8em; }
-  p { 
-    text-align: left; 
-    font-size: 120%;
-    }
-  
   .reveal blockquote {
   display: block;
 	position: relative;
@@ -20,6 +15,25 @@
 	.reveal blockquote p:first-child,
 	.reveal blockquote p:last-child {
 		display: inline-block;
+	}
+	p{
+	  color: black;
+	}
+	li{
+	  color: black;
+	}
+	
+	h1{
+	  color: black;
+	}
+	h2{
+	  color: black;
+	}
+	h3{
+	  color: black;
+	}
+	hgroup{
+	  color: black;
 	}
 
   
