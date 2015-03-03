@@ -1,7 +1,7 @@
 ---
 title: "Data Visualization for Education"
 author: "Jared E. Knowles"
-date: "March 4, 2015"
+date: "March 5, 2015"
 output:
   ioslides_presentation:
     css: custom.css
@@ -103,7 +103,7 @@ There are a few things that all charts need *most of the time!*:
 > These add up to provide context and meaning to viewers who have not analyzed 
 the dataset themselves.
 
-## Principles {.smaller .columns-2}
+## Principles {.columns-2}
 
 - Elements of a chart
 - Dimensionality
@@ -309,7 +309,7 @@ qplot(readSS, data=newdf) + theme_dpi() +
 
 ### Example
 
-```{r studentexample,echo=FALSE,out.width="420px",out.height="330px"}
+```{r studentexample,echo=FALSE,out.width="400px",out.height="330px"}
 qplot(attday, readSS,
       data=student_long[student_long$grade==3 & 
                           student_long$stuid %in% 
@@ -607,21 +607,21 @@ We can combine these features.
 
 ## Why does this work?
 
->- Annotation
->- Labeling
->- Lots of data-ink
->- Reference points galore
+- Annotation
+- Labeling
+- Lots of data-ink
+- Reference points galore
 
 ## Some tips
 
->- Have a properly chosen format and design 
->- Use words, numbers and drawing together
->- Reflect a balance, a proportion, relevant scale
->- Display an accessible complexity of details
->- Have a narrative quality, tell a story
->- Avoid content-free decoration (Tufte's proverbial chartjunk)
->- Draw in a professional manner with an eye on the technical details
->- Provide your audience with the context they need and remember they haven't 
+- Have a properly chosen format and design 
+- Use words, numbers and drawing together
+- Reflect a balance, a proportion, relevant scale
+- Display an accessible complexity of details
+- Have a narrative quality, tell a story
+- Avoid content-free decoration (Tufte's proverbial chartjunk)
+- Draw in a professional manner with an eye on the technical details
+- Provide your audience with the context they need and remember they haven't 
 lived in the data like you!
 
 ## Themes
@@ -726,6 +726,7 @@ We have a number of other techniques we can use beyond simple charts.
 - [ggplot2](http://www.ggplot2.org)
 - [Robert Kosara](http://eagereyes.org/about)
 - [Data Stories Podcast](http://datastori.es/)
+- [Rad Presenters Podcast](http://www.radpresenters.com/)
 
 ## Contact Information
 
